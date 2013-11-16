@@ -1,0 +1,36 @@
+{
+  "author": {
+    "name": "Soares Chen",
+    "email": "soares.chen@gmail.com",
+    "url": "http://soareschen.com"
+  },
+  "name": "quiver-handler-convert",
+  "desription": "Convert simple handler to standard stream handler",
+  "version": "0.0.1",
+  "homepage": "https://github.com/quiverjs/handler-convert",
+  "repository": {
+    "url": "git@github.com:quiverjs/handler-convert.git"
+  },
+  "dependencies": {
+    "quiver-error": "0.0.x",
+    "quiver-copy": "0.0.x",
+    "quiver-stream-channel": "0.0.x",
+    "quiver-stream-convert": "0.0.x"
+  },
+  "devDependencies": {
+    "mocha": "1.8.x",
+    "should": "1.2.x"
+  },
+  "bugs": {
+    "url": "https://github.com/quiverjs/handler-convert/issues",
+    "email": "quiverjs@soareschen.com"
+  },
+  "licenses": {
+    "type": "MIT",
+    "url": "https://raw.github.com/quiverjs/license/master/LICENSE"
+  },
+  "main": "./lib/handler-convert",
+  "scripts": {
+    "test": "make test"
+  }
+}
