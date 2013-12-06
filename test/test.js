@@ -72,31 +72,44 @@ describe('simple handler test', function() {
     })
   })
 
-  it('handler builder test', function(callback) {
-    var testHandlerBuilder = function(config, callback) {
-      var handler = function(args, text, callback) {
-        text.should.equal('hello world')
-        callback(null, { result: 'hello world' })
-      }
-      callback(null, handler)
-    }
-
-    var handleableBuilder = simpleHandler.simpleHandlerBuilderToHandleableBuilder(
-      'text', 'json', testHandlerBuilder)
-
-    handleableBuilder({}, function(err, handleable) {
-      if(err) return callback(err)
-
-      handleable.toSimpleHandler('text', 'json', function(err, handler) {
+  it('void json stream handler', function(callback) {
+    var streamHandler = function(args, inputStreamable, callback) {
+      streamConvert.streamableToText(inputStreamable, function(err, text) {
         if(err) return callback(err)
 
-        handler({}, 'hello world', function(err, json) {
-          if(err) return callback(err)
-
-          json.result.should.equal('hello world')
-          callback()
-        })
+        text.should.equal('')
+        callback(null, streamConvert.jsonToStreamable({ result: 'hello world' }))
       })
+    }
+
+    var testHandler = simpleHandler.streamHandlerToSimpleHandler('void', 'json', streamHandler)
+
+    testHandler({}, function(err, json) {
+      if(err) return callback(err)
+
+      json.result.should.equal('hello world')
+      callback()
+    })
+  })
+
+  it('stream void stream handler', function(callback) {
+    var streamHandler = function(args, inputStreamable, callback) {
+      streamConvert.streamableToText(inputStreamable, function(err, text) {
+        if(err) return callback(err)
+
+        text.should.equal('hello world')
+        callback(null, streamChannel.createEmptyStreamable())
+      })
+    }
+
+    var testHandler = simpleHandler.streamHandlerToSimpleHandler('stream', 'void', streamHandler)
+
+    var readStream = streamConvert.textToStream('hello world')
+    testHandler({}, readStream, function(err, result) {
+      if(err) return callback(err)
+      should.not.exist(result)
+
+      callback()
     })
   })
 })
