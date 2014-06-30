@@ -1,115 +1,94 @@
+import 'traceur'
 
-'use strict'
+import { 
+  simpleToStreamHandler, 
+  streamToSimpleHandler 
+} from '../lib/simple-handler.js'
 
-var should = require('should')
-var streamChannel = require('quiver-stream-channel')
-var streamConvert = require('quiver-stream-convert')
-var simpleHandler = require('../lib/simple-handler')
+import {
+  textToStreamable, streamableToText, 
+  textToStream, streamToText,
+  emptyStreamable
+} from 'quiver-stream-util'
 
-describe('simple handler test', function() {
-  it('json text convert', function(callback) {
-    var testHandler = function(args, json, callback) {
+import { resolve, reject } from 'quiver-promise'
+
+var chai = require('chai')
+var chaiAsPromised = require('chai-as-promised')
+
+chai.use(chaiAsPromised)
+var should = chai.should()
+
+describe('simple handler test', () => {
+  it('json text convert', () => {
+    var simpleHandler = (args, json) => {
       json.content.should.equal('hello world')
 
-      callback(null, 'hello world')
+      return resolve('Hello World!')
     }
 
-    var handler = simpleHandler.simpleHandlerToStreamHandler('json', 'text', testHandler)
+    var handler = simpleToStreamHandler(simpleHandler, 'json', 'text')
+    var inStream = textToStreamable('{ "content": "hello world" }')
 
-    var testIn = streamConvert.jsonToStreamable({ content: 'hello world' })
-    handler({}, testIn, function(err, resultStreamable) {
-      if(err) return callback(err)
-
-      streamConvert.streamableToText(resultStreamable, function(err, text) {
-        if(err) return callback(err)
-
-        text.should.equal('hello world')
-        callback()
-      })
-    })
+    return handler({}, inStream).then(streamableToText)
+      .should.eventually.equal('Hello World!')
   })
 
-  it('void stream convert', function(callback) {
-    var testHandler = function(args, callback) {
-      callback(null, streamConvert.textToStream('hello world'))
+  it('void stream convert', () => {
+    var simpleHandler = (args, input) => {
+      should.not.exist(input)
+      return resolve(textToStream('hello world'))
     }
 
-    var handler = simpleHandler.simpleHandlerToStreamHandler('void', 'stream', testHandler)
-    handler({}, streamChannel.createEmptyStreamable(), function(err, readStream) {
-      if(err) return callback(err)
+    var handler = simpleToStreamHandler(simpleHandler, 'void', 'stream')
 
-      streamConvert.streamableToText(readStream, function(err, text) {
-        if(err) return callback(err)
-
-        text.should.equal('hello world')
-        callback()
-      })
-    })
+    return handler({}, emptyStreamable()).then(streamableToText)
+      .should.eventually.equal('hello world')
   })
 
-  it('stream void convert', function(callback) {
-    var testHandler = function(args, readStream, callback) {
-      streamConvert.streamToText(readStream, function(err, text) {
-        if(err) callback(err)
 
+  it('stream void convert', () => {
+    var simpleHandler = (args, readStream) =>
+      streamToText(readStream).then(text => {
         text.should.equal('hello world')
-        callback()
+        return null
       })
-    }
 
-    var handler = simpleHandler.simpleHandlerToStreamHandler('stream', 'void', testHandler)
-    var testIn = streamConvert.textToStreamable('hello world')
 
-    handler({}, testIn, function(err, resultStreamable) {
-      if(err) return callback(err)
+    var handler = simpleToStreamHandler(simpleHandler, 'stream', 'void')
+    var inStream = textToStreamable('hello world')
 
-      streamConvert.streamableToText(resultStreamable, function(err, text) {
-        if(err) return callback(err)
+    return handler({}, inStream).then(streamableToText)
+      .should.eventually.equal('')
+  })
 
+  it('void json stream handler', () => {
+    var streamHandler = (args, streamable) =>
+      streamableToText(streamable).then(text => {
         text.should.equal('')
-        callback()
+
+        return textToStreamable('{ "result": "hello world" }')
       })
-    })
-  })
 
-  it('void json stream handler', function(callback) {
-    var streamHandler = function(args, inputStreamable, callback) {
-      streamConvert.streamableToText(inputStreamable, function(err, text) {
-        if(err) return callback(err)
+    var handler = streamToSimpleHandler(streamHandler, 'void', 'json')
 
-        text.should.equal('')
-        callback(null, streamConvert.jsonToStreamable({ result: 'hello world' }))
-      })
-    }
-
-    var testHandler = simpleHandler.streamHandlerToSimpleHandler('void', 'json', streamHandler)
-
-    testHandler({}, function(err, json) {
-      if(err) return callback(err)
-
+    return handler({}).then(json => {
       json.result.should.equal('hello world')
-      callback()
     })
   })
 
-  it('stream void stream handler', function(callback) {
-    var streamHandler = function(args, inputStreamable, callback) {
-      streamConvert.streamableToText(inputStreamable, function(err, text) {
-        if(err) return callback(err)
-
+  it('stream void stream handler', () => {
+    var streamHandler = (args, streamable) =>
+      streamableToText(streamable).then(text => {
         text.should.equal('hello world')
-        callback(null, streamChannel.createEmptyStreamable())
+        return emptyStreamable()
       })
-    }
 
-    var testHandler = simpleHandler.streamHandlerToSimpleHandler('stream', 'void', streamHandler)
 
-    var readStream = streamConvert.textToStream('hello world')
-    testHandler({}, readStream, function(err, result) {
-      if(err) return callback(err)
-      should.not.exist(result)
+    var handler = streamToSimpleHandler(streamHandler, 'stream', 'void')
 
-      callback()
-    })
+    var inStream = textToStream('hello world')
+    return handler({}, inStream).then(result =>
+      should.not.exist(result))
   })
 })
