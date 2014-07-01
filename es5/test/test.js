@@ -20,7 +20,7 @@ describe('simple handler test', (function() {
   it('json text convert', (function() {
     var simpleHandler = (function(args, json) {
       json.content.should.equal('hello world');
-      return resolve('Hello World');
+      return resolve('Hello World!');
     });
     var handler = simpleToStreamHandler(simpleHandler, 'json', 'text');
     var inStream = textToStreamable('{ "content": "hello world" }');

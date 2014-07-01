@@ -6,19 +6,22 @@ Object.defineProperties(exports, {
   streamToSimpleHandler: {get: function() {
       return streamToSimpleHandler;
     }},
+  validateSimpleTypes: {get: function() {
+      return validateSimpleTypes;
+    }},
   __esModule: {value: true}
 });
-var $__0 = $traceurRuntime.assertObject(require('quiver-stream-util')),
-    streamableToText = $__0.streamableToText,
-    streamableToJson = $__0.streamableToJson,
-    textToStreamable = $__0.textToStreamable,
-    jsonToStreamable = $__0.jsonToStreamable,
-    streamToStreamable = $__0.streamToStreamable,
-    emptyStreamable = $__0.emptyStreamable;
+var $__2 = $traceurRuntime.assertObject(require('quiver-stream-util')),
+    streamableToText = $__2.streamableToText,
+    streamableToJson = $__2.streamableToJson,
+    textToStreamable = $__2.textToStreamable,
+    jsonToStreamable = $__2.jsonToStreamable,
+    streamToStreamable = $__2.streamToStreamable,
+    emptyStreamable = $__2.emptyStreamable;
 var error = $traceurRuntime.assertObject(require('quiver-error')).error;
-var $__0 = $traceurRuntime.assertObject(require('quiver-promise')),
-    resolve = $__0.resolve,
-    reject = $__0.reject;
+var $__2 = $traceurRuntime.assertObject(require('quiver-promise')),
+    resolve = $__2.resolve,
+    reject = $__2.reject;
 var convertHandler = (function(handler, inConvert, outConvert) {
   return (function(args, input) {
     return inConvert(input).then((function(input) {
@@ -74,3 +77,14 @@ var createConverter = (function(inTable, outTable) {
 });
 var simpleToStreamHandler = createConverter(streamToSimpleTable, simpleToStreamTable);
 var streamToSimpleHandler = createConverter(simpleToStreamTable, streamToSimpleTable);
+var validateSimpleTypes = (function(types) {
+  for (var $__0 = types[Symbol.iterator](),
+      $__1; !($__1 = $__0.next()).done; ) {
+    var type = $__1.value;
+    {
+      if (!streamToSimpleTable[type]) {
+        return new Error('invalid smple type ' + type);
+      }
+    }
+  }
+});
