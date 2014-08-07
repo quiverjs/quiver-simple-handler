@@ -9,9 +9,6 @@ var $__0 = $traceurRuntime.assertObject(require('quiver-stream-util')),
     textToStream = $__0.textToStream,
     streamToText = $__0.streamToText,
     emptyStreamable = $__0.emptyStreamable;
-var $__0 = $traceurRuntime.assertObject(require('quiver-promise')),
-    resolve = $__0.resolve,
-    reject = $__0.reject;
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
@@ -20,7 +17,7 @@ describe('simple handler test', (function() {
   it('json text convert', (function() {
     var simpleHandler = (function(args, json) {
       json.content.should.equal('hello world');
-      return resolve('Hello World!');
+      return 'Hello World!';
     });
     var handler = simpleToStreamHandler(simpleHandler, 'json', 'text');
     var inStream = textToStreamable('{ "content": "hello world" }');
@@ -29,7 +26,7 @@ describe('simple handler test', (function() {
   it('void stream convert', (function() {
     var simpleHandler = (function(args, input) {
       should.not.exist(input);
-      return resolve(textToStream('hello world'));
+      return textToStream('hello world');
     });
     var handler = simpleToStreamHandler(simpleHandler, 'void', 'stream');
     return handler({}, emptyStreamable()).then(streamableToText).should.eventually.equal('hello world');

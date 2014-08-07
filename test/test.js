@@ -11,8 +11,6 @@ import {
   emptyStreamable
 } from 'quiver-stream-util'
 
-import { resolve, reject } from 'quiver-promise'
-
 var chai = require('chai')
 var chaiAsPromised = require('chai-as-promised')
 
@@ -24,7 +22,7 @@ describe('simple handler test', () => {
     var simpleHandler = (args, json) => {
       json.content.should.equal('hello world')
 
-      return resolve('Hello World!')
+      return 'Hello World!'
     }
 
     var handler = simpleToStreamHandler(simpleHandler, 'json', 'text')
@@ -37,7 +35,7 @@ describe('simple handler test', () => {
   it('void stream convert', () => {
     var simpleHandler = (args, input) => {
       should.not.exist(input)
-      return resolve(textToStream('hello world'))
+      return textToStream('hello world')
     }
 
     var handler = simpleToStreamHandler(simpleHandler, 'void', 'stream')
