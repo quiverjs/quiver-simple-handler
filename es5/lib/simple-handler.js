@@ -11,15 +11,18 @@ Object.defineProperties(exports, {
     }},
   __esModule: {value: true}
 });
-var $__2 = $traceurRuntime.assertObject(require('quiver-stream-util')),
-    streamableToText = $__2.streamableToText,
-    streamableToJson = $__2.streamableToJson,
-    textToStreamable = $__2.textToStreamable,
-    jsonToStreamable = $__2.jsonToStreamable,
-    streamToStreamable = $__2.streamToStreamable,
-    emptyStreamable = $__2.emptyStreamable;
-var error = $traceurRuntime.assertObject(require('quiver-error')).error;
-var $__2 = $traceurRuntime.assertObject(require('quiver-promise')),
+var $__quiver_45_stream_45_util__,
+    $__quiver_45_error__,
+    $__quiver_45_promise__;
+var $__0 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__quiver_45_stream_45_util__ && $__quiver_45_stream_45_util__.__esModule && $__quiver_45_stream_45_util__ || {default: $__quiver_45_stream_45_util__}),
+    streamableToText = $__0.streamableToText,
+    streamableToJson = $__0.streamableToJson,
+    textToStreamable = $__0.textToStreamable,
+    jsonToStreamable = $__0.jsonToStreamable,
+    streamToStreamable = $__0.streamToStreamable,
+    emptyStreamable = $__0.emptyStreamable;
+var error = ($__quiver_45_error__ = require("quiver-error"), $__quiver_45_error__ && $__quiver_45_error__.__esModule && $__quiver_45_error__ || {default: $__quiver_45_error__}).error;
+var $__2 = ($__quiver_45_promise__ = require("quiver-promise"), $__quiver_45_promise__ && $__quiver_45_promise__.__esModule && $__quiver_45_promise__ || {default: $__quiver_45_promise__}),
     resolve = $__2.resolve,
     reject = $__2.reject,
     safePromised = $__2.safePromised;
@@ -76,9 +79,9 @@ var createConverter = (function(inTable, outTable) {
 var simpleToStreamHandler = createConverter(streamToSimpleTable, simpleToStreamTable);
 var streamToSimpleHandler = createConverter(simpleToStreamTable, streamToSimpleTable);
 var validateSimpleTypes = (function(types) {
-  for (var $__0 = types[Symbol.iterator](),
-      $__1; !($__1 = $__0.next()).done; ) {
-    var type = $__1.value;
+  for (var $__3 = types[Symbol.iterator](),
+      $__4; !($__4 = $__3.next()).done; ) {
+    var type = $__4.value;
     {
       if (!streamToSimpleTable[type]) {
         return new Error('invalid simple type ' + type);

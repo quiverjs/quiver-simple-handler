@@ -1,14 +1,17 @@
 "use strict";
-require('traceur');
-var $__0 = $traceurRuntime.assertObject(require('../lib/simple-handler.js')),
+var $__traceur_64_0_46_0_46_58__,
+    $___46__46__47_lib_47_simple_45_handler_46_js__,
+    $__quiver_45_stream_45_util__;
+($__traceur_64_0_46_0_46_58__ = require("traceur"), $__traceur_64_0_46_0_46_58__ && $__traceur_64_0_46_0_46_58__.__esModule && $__traceur_64_0_46_0_46_58__ || {default: $__traceur_64_0_46_0_46_58__});
+var $__0 = ($___46__46__47_lib_47_simple_45_handler_46_js__ = require("../lib/simple-handler.js"), $___46__46__47_lib_47_simple_45_handler_46_js__ && $___46__46__47_lib_47_simple_45_handler_46_js__.__esModule && $___46__46__47_lib_47_simple_45_handler_46_js__ || {default: $___46__46__47_lib_47_simple_45_handler_46_js__}),
     simpleToStreamHandler = $__0.simpleToStreamHandler,
     streamToSimpleHandler = $__0.streamToSimpleHandler;
-var $__0 = $traceurRuntime.assertObject(require('quiver-stream-util')),
-    textToStreamable = $__0.textToStreamable,
-    streamableToText = $__0.streamableToText,
-    textToStream = $__0.textToStream,
-    streamToText = $__0.streamToText,
-    emptyStreamable = $__0.emptyStreamable;
+var $__1 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__quiver_45_stream_45_util__ && $__quiver_45_stream_45_util__.__esModule && $__quiver_45_stream_45_util__ || {default: $__quiver_45_stream_45_util__}),
+    textToStreamable = $__1.textToStreamable,
+    streamableToText = $__1.streamableToText,
+    textToStream = $__1.textToStream,
+    streamToText = $__1.streamToText,
+    emptyStreamable = $__1.emptyStreamable;
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
