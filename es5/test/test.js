@@ -1,8 +1,8 @@
 "use strict";
-var $__traceur_64_0_46_0_46_58__,
+var $__traceur_64_0_46_0_46_6__,
     $___46__46__47_lib_47_simple_45_handler_46_js__,
     $__quiver_45_stream_45_util__;
-($__traceur_64_0_46_0_46_58__ = require("traceur"), $__traceur_64_0_46_0_46_58__ && $__traceur_64_0_46_0_46_58__.__esModule && $__traceur_64_0_46_0_46_58__ || {default: $__traceur_64_0_46_0_46_58__});
+($__traceur_64_0_46_0_46_6__ = require("traceur"), $__traceur_64_0_46_0_46_6__ && $__traceur_64_0_46_0_46_6__.__esModule && $__traceur_64_0_46_0_46_6__ || {default: $__traceur_64_0_46_0_46_6__});
 var $__0 = ($___46__46__47_lib_47_simple_45_handler_46_js__ = require("../lib/simple-handler.js"), $___46__46__47_lib_47_simple_45_handler_46_js__ && $___46__46__47_lib_47_simple_45_handler_46_js__.__esModule && $___46__46__47_lib_47_simple_45_handler_46_js__ || {default: $___46__46__47_lib_47_simple_45_handler_46_js__}),
     simpleToStreamHandler = $__0.simpleToStreamHandler,
     streamToSimpleHandler = $__0.streamToSimpleHandler;
