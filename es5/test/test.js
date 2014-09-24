@@ -1,17 +1,19 @@
 "use strict";
 var $__traceur_64_0_46_0_46_6__,
+    $__quiver_45_promise__,
     $___46__46__47_lib_47_simple_45_handler_46_js__,
     $__quiver_45_stream_45_util__;
 ($__traceur_64_0_46_0_46_6__ = require("traceur"), $__traceur_64_0_46_0_46_6__ && $__traceur_64_0_46_0_46_6__.__esModule && $__traceur_64_0_46_0_46_6__ || {default: $__traceur_64_0_46_0_46_6__});
-var $__0 = ($___46__46__47_lib_47_simple_45_handler_46_js__ = require("../lib/simple-handler.js"), $___46__46__47_lib_47_simple_45_handler_46_js__ && $___46__46__47_lib_47_simple_45_handler_46_js__.__esModule && $___46__46__47_lib_47_simple_45_handler_46_js__ || {default: $___46__46__47_lib_47_simple_45_handler_46_js__}),
-    simpleToStreamHandler = $__0.simpleToStreamHandler,
-    streamToSimpleHandler = $__0.streamToSimpleHandler;
-var $__1 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__quiver_45_stream_45_util__ && $__quiver_45_stream_45_util__.__esModule && $__quiver_45_stream_45_util__ || {default: $__quiver_45_stream_45_util__}),
-    textToStreamable = $__1.textToStreamable,
-    streamableToText = $__1.streamableToText,
-    textToStream = $__1.textToStream,
-    streamToText = $__1.streamToText,
-    emptyStreamable = $__1.emptyStreamable;
+var async = ($__quiver_45_promise__ = require("quiver-promise"), $__quiver_45_promise__ && $__quiver_45_promise__.__esModule && $__quiver_45_promise__ || {default: $__quiver_45_promise__}).async;
+var $__1 = ($___46__46__47_lib_47_simple_45_handler_46_js__ = require("../lib/simple-handler.js"), $___46__46__47_lib_47_simple_45_handler_46_js__ && $___46__46__47_lib_47_simple_45_handler_46_js__.__esModule && $___46__46__47_lib_47_simple_45_handler_46_js__ || {default: $___46__46__47_lib_47_simple_45_handler_46_js__}),
+    simpleToStreamHandler = $__1.simpleToStreamHandler,
+    streamToSimpleHandler = $__1.streamToSimpleHandler;
+var $__2 = ($__quiver_45_stream_45_util__ = require("quiver-stream-util"), $__quiver_45_stream_45_util__ && $__quiver_45_stream_45_util__.__esModule && $__quiver_45_stream_45_util__ || {default: $__quiver_45_stream_45_util__}),
+    textToStreamable = $__2.textToStreamable,
+    streamableToText = $__2.streamableToText,
+    textToStream = $__2.textToStream,
+    streamToText = $__2.streamToText,
+    emptyStreamable = $__2.emptyStreamable;
 var chai = require('chai');
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
@@ -34,6 +36,45 @@ describe('simple handler test', (function() {
     var handler = simpleToStreamHandler(simpleHandler, 'void', 'stream');
     return handler({}, emptyStreamable()).then(streamableToText).should.eventually.equal('hello world');
   }));
+  it('void html convert', async($traceurRuntime.initGeneratorFunction(function $__3() {
+    var html,
+        simpleHandler,
+        handler,
+        resultStreamable;
+    return $traceurRuntime.createGeneratorInstance(function($ctx) {
+      while (true)
+        switch ($ctx.state) {
+          case 0:
+            html = '<b>Hello World</b>';
+            simpleHandler = (function(args) {
+              return html;
+            });
+            handler = simpleToStreamHandler(simpleHandler, 'void', 'html');
+            $ctx.state = 10;
+            break;
+          case 10:
+            $ctx.state = 2;
+            return handler({}, emptyStreamable());
+          case 2:
+            resultStreamable = $ctx.sent;
+            $ctx.state = 4;
+            break;
+          case 4:
+            resultStreamable.contentType.should.equal('text/html');
+            $ctx.state = 12;
+            break;
+          case 12:
+            $ctx.state = 6;
+            return streamableToText(resultStreamable).should.eventually.equal(html);
+          case 6:
+            $ctx.maybeThrow();
+            $ctx.state = -2;
+            break;
+          default:
+            return $ctx.end();
+        }
+    }, $__3, this);
+  })));
   it('stream void convert', (function() {
     var simpleHandler = (function(args, readStream) {
       return streamToText(readStream).then((function(text) {

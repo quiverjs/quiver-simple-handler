@@ -51,9 +51,13 @@ var streamableToStream = (function(streamable) {
 var streamableToStreamable = (function(streamable) {
   return resolve(streamable);
 });
+var htmlToStreamable = (function(text) {
+  return textToStreamable(text, 'text/html');
+});
 var streamToSimpleTable = {
   'void': streamableToVoid,
   'text': streamableToText,
+  'html': streamableToText,
   'json': streamableToJson,
   'stream': streamableToStream,
   'streamable': streamableToStreamable
@@ -61,6 +65,7 @@ var streamToSimpleTable = {
 var simpleToStreamTable = {
   'void': voidToStreamable,
   'text': textToStreamable,
+  'html': htmlToStreamable,
   'json': jsonToStreamable,
   'stream': streamToStreamable,
   'streamable': streamableToStreamable

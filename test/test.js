@@ -1,5 +1,7 @@
 import 'traceur'
 
+import { async } from 'quiver-promise'
+
 import { 
   simpleToStreamHandler, 
   streamToSimpleHandler 
@@ -44,6 +46,22 @@ describe('simple handler test', () => {
       .should.eventually.equal('hello world')
   })
 
+  it('void html convert', async(function*() {
+    var html = '<b>Hello World</b>'
+
+    var simpleHandler = args => html
+    
+    var handler = simpleToStreamHandler(simpleHandler, 
+      'void', 'html')
+    
+    var resultStreamable = yield handler(
+      {}, emptyStreamable())
+
+    resultStreamable.contentType.should.equal('text/html')
+
+    yield streamableToText(resultStreamable)
+      .should.eventually.equal(html)
+  }))
 
   it('stream void convert', () => {
     var simpleHandler = (args, readStream) =>
