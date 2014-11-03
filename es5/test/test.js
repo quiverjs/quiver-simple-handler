@@ -1,9 +1,9 @@
 "use strict";
-var $__traceur_64_0_46_0_46_6__,
+var $__traceur_64_0_46_0_46_7__,
     $__quiver_45_promise__,
     $___46__46__47_lib_47_simple_45_handler_46_js__,
     $__quiver_45_stream_45_util__;
-($__traceur_64_0_46_0_46_6__ = require("traceur"), $__traceur_64_0_46_0_46_6__ && $__traceur_64_0_46_0_46_6__.__esModule && $__traceur_64_0_46_0_46_6__ || {default: $__traceur_64_0_46_0_46_6__});
+($__traceur_64_0_46_0_46_7__ = require("traceur"), $__traceur_64_0_46_0_46_7__ && $__traceur_64_0_46_0_46_7__.__esModule && $__traceur_64_0_46_0_46_7__ || {default: $__traceur_64_0_46_0_46_7__});
 var async = ($__quiver_45_promise__ = require("quiver-promise"), $__quiver_45_promise__ && $__quiver_45_promise__.__esModule && $__quiver_45_promise__ || {default: $__quiver_45_promise__}).async;
 var $__1 = ($___46__46__47_lib_47_simple_45_handler_46_js__ = require("../lib/simple-handler.js"), $___46__46__47_lib_47_simple_45_handler_46_js__ && $___46__46__47_lib_47_simple_45_handler_46_js__.__esModule && $___46__46__47_lib_47_simple_45_handler_46_js__ || {default: $___46__46__47_lib_47_simple_45_handler_46_js__}),
     simpleToStreamHandler = $__1.simpleToStreamHandler,
