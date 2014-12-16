@@ -84,7 +84,7 @@ var createConverter = (function(inTable, outTable) {
 var simpleToStreamHandler = createConverter(streamToSimpleTable, simpleToStreamTable);
 var streamToSimpleHandler = createConverter(simpleToStreamTable, streamToSimpleTable);
 var validateSimpleTypes = (function(types) {
-  for (var $__3 = types[Symbol.iterator](),
+  for (var $__3 = types[$traceurRuntime.toProperty(Symbol.iterator)](),
       $__4; !($__4 = $__3.next()).done; ) {
     var type = $__4.value;
     {

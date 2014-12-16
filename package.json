@@ -6,24 +6,24 @@
   },
   "name": "quiver-simple-handler",
   "desription": "Convert simple handler to standard stream handler",
-  "version": "1.2.0",
-  "homepage": "https://github.com/quiverjs/simple-handler",
+  "version": "1.2.1",
+  "homepage": "https://github.com/quiverjs/quiver-simple-handler",
   "repository": {
-    "url": "git@github.com:quiverjs/simple-handler.git"
+    "url": "git@github.com:quiverjs/quiver-simple-handler.git"
   },
   "dependencies": {
-    "traceur": "0.0.72",
-    "quiver-error": "~0.1.1",
-    "quiver-promise": "~0.2.0",
-    "quiver-stream-util": "~1.2.0"
+    "traceur": "0.0.79",
+    "quiver-error": "~1.0.1",
+    "quiver-promise": "~1.0.0",
+    "quiver-stream-util": "~1.2.1"
   },
   "devDependencies": {
-    "chai": "^1.9.2",
+    "chai": "^1.10.0",
     "mocha": "^2.0.1",
     "chai-as-promised": "^4.1.1"
   },
   "bugs": {
-    "url": "https://github.com/quiverjs/simple-handler/issues"
+    "url": "https://github.com/quiverjs/quiver-simple-handler/issues"
   },
   "licenses": {
     "type": "MIT",
