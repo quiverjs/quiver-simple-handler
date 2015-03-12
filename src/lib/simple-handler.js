@@ -7,28 +7,28 @@ import {
 import { error } from 'quiver-error'
 import { resolve, reject, safePromised } from 'quiver-promise'
 
-let convertHandler = (handler, inConvert, outConvert) =>
+const convertHandler = (handler, inConvert, outConvert) =>
   (args, input) =>
     resolve(inConvert(input)).then(input =>
       handler(args, input).then(result =>
         outConvert(result)))
 
-let streamableToVoid = streamable => {
+const streamableToVoid = streamable => {
   if(streamable.reusable) return resolve()
 
   return streamable.toStream().then(readStream =>
     readStream.closeRead())
 }
 
-let voidToStreamable = () => resolve(emptyStreamable())
+const voidToStreamable = () => resolve(emptyStreamable())
 
-let streamableToStream = streamable => streamable.toStream()
+const streamableToStream = streamable => streamable.toStream()
 
-let streamableToStreamable = streamable => resolve(streamable)
+const streamableToStreamable = streamable => resolve(streamable)
 
-let htmlToStreamable = (text) => textToStreamable(text, 'text/html')
+const htmlToStreamable = (text) => textToStreamable(text, 'text/html')
 
-let streamToSimpleTable = {
+const streamToSimpleTable = {
   'void': streamableToVoid,
   'text': streamableToText,
   'string': streamableToText,
@@ -38,7 +38,7 @@ let streamToSimpleTable = {
   'streamable': streamableToStreamable
 }
 
-let simpleToStreamTable = {
+const simpleToStreamTable = {
   'void': voidToStreamable,
   'text': textToStreamable,
   'string': textToStreamable,
@@ -48,25 +48,25 @@ let simpleToStreamTable = {
   'streamable': streamableToStreamable
 }
 
-let createConverter = (inTable, outTable) =>
+const createConverter = (inTable, outTable) =>
   (handler, inType, outType) =>  {
-    let inConvert = inTable[inType]
+    const inConvert = inTable[inType]
     if(!inConvert) throw new Error('invalid simple type ' + inType)
 
-    let outConvert = outTable[outType]
+    const outConvert = outTable[outType]
     if(!outConvert) throw new Error('invalid simple type ' + outType)
 
     return convertHandler(safePromised(handler), 
       inConvert, outConvert)
   }
 
-export let simpleToStreamHandler = createConverter(
+export const simpleToStreamHandler = createConverter(
   streamToSimpleTable, simpleToStreamTable)
 
-export let streamToSimpleHandler = createConverter(
+export const streamToSimpleHandler = createConverter(
   simpleToStreamTable, streamToSimpleTable)
 
-export let validateSimpleTypes = types => {
+export const validateSimpleTypes = types => {
   for(let type of types) {
     if(!streamToSimpleTable[type]) {
       return new Error('invalid simple type ' + type)

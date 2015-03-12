@@ -1,5 +1,3 @@
-import 'traceur'
-
 import { async } from 'quiver-promise'
 
 import { 
@@ -17,44 +15,44 @@ import chai from 'chai'
 import chaiAsPromised from 'chai-as-promised'
 
 chai.use(chaiAsPromised)
-let should = chai.should()
+const should = chai.should()
 
 describe('simple handler test', () => {
   it('json text convert', () => {
-    let simpleHandler = (args, json) => {
+    const simpleHandler = (args, json) => {
       json.content.should.equal('hello world')
 
       return 'Hello World!'
     }
 
-    let handler = simpleToStreamHandler(simpleHandler, 'json', 'text')
-    let inStream = textToStreamable('{ "content": "hello world" }')
+    const handler = simpleToStreamHandler(simpleHandler, 'json', 'text')
+    const inStream = textToStreamable('{ "content": "hello world" }')
 
     return handler({}, inStream).then(streamableToText)
       .should.eventually.equal('Hello World!')
   })
 
   it('void stream convert', () => {
-    let simpleHandler = (args, input) => {
+    const simpleHandler = (args, input) => {
       should.not.exist(input)
       return textToStream('hello world')
     }
 
-    let handler = simpleToStreamHandler(simpleHandler, 'void', 'stream')
+    const handler = simpleToStreamHandler(simpleHandler, 'void', 'stream')
 
     return handler({}, emptyStreamable()).then(streamableToText)
       .should.eventually.equal('hello world')
   })
 
   it('void html convert', async(function*() {
-    let html = '<b>Hello World</b>'
+    const html = '<b>Hello World</b>'
 
-    let simpleHandler = args => html
+    const simpleHandler = args => html
     
-    let handler = simpleToStreamHandler(simpleHandler, 
+    const handler = simpleToStreamHandler(simpleHandler, 
       'void', 'html')
     
-    let resultStreamable = yield handler(
+    const resultStreamable = yield handler(
       {}, emptyStreamable())
 
     resultStreamable.contentType.should.equal('text/html')
@@ -64,29 +62,29 @@ describe('simple handler test', () => {
   }))
 
   it('stream void convert', () => {
-    let simpleHandler = (args, readStream) =>
+    const simpleHandler = (args, readStream) =>
       streamToText(readStream).then(text => {
         text.should.equal('hello world')
         return null
       })
 
 
-    let handler = simpleToStreamHandler(simpleHandler, 'stream', 'void')
-    let inStream = textToStreamable('hello world')
+    const handler = simpleToStreamHandler(simpleHandler, 'stream', 'void')
+    const inStream = textToStreamable('hello world')
 
     return handler({}, inStream).then(streamableToText)
       .should.eventually.equal('')
   })
 
   it('void json stream handler', () => {
-    let streamHandler = (args, streamable) =>
+    const streamHandler = (args, streamable) =>
       streamableToText(streamable).then(text => {
         text.should.equal('')
 
         return textToStreamable('{ "result": "hello world" }')
       })
 
-    let handler = streamToSimpleHandler(streamHandler, 'void', 'json')
+    const handler = streamToSimpleHandler(streamHandler, 'void', 'json')
 
     return handler({}).then(json => {
       json.result.should.equal('hello world')
@@ -94,16 +92,16 @@ describe('simple handler test', () => {
   })
 
   it('stream void stream handler', () => {
-    let streamHandler = (args, streamable) =>
+    const streamHandler = (args, streamable) =>
       streamableToText(streamable).then(text => {
         text.should.equal('hello world')
         return emptyStreamable()
       })
 
 
-    let handler = streamToSimpleHandler(streamHandler, 'stream', 'void')
+    const handler = streamToSimpleHandler(streamHandler, 'stream', 'void')
 
-    let inStream = textToStream('hello world')
+    const inStream = textToStream('hello world')
     return handler({}, inStream).then(result =>
       should.not.exist(result))
   })
