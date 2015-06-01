@@ -44,7 +44,7 @@ describe('simple handler test', () => {
       .should.eventually.equal('hello world')
   })
 
-  it('void html convert', async(function*() {
+  it('void html convert', async function() {
     const html = '<b>Hello World</b>'
 
     const simpleHandler = args => html
@@ -52,14 +52,14 @@ describe('simple handler test', () => {
     const handler = simpleToStreamHandler(simpleHandler, 
       'void', 'html')
     
-    const resultStreamable = yield handler(
+    const resultStreamable = await handler(
       {}, emptyStreamable())
 
     resultStreamable.contentType.should.equal('text/html')
 
-    yield streamableToText(resultStreamable)
+    await streamableToText(resultStreamable)
       .should.eventually.equal(html)
-  }))
+  })
 
   it('stream void convert', () => {
     const simpleHandler = (args, readStream) =>
